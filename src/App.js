@@ -1,15 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-
-// const Pet = props => {
-const Pet = ({ name, animal, breed }) => {
-  //destructuring way
-  return React.createElement("div", {}, [
-    React.createElement("h1", {}, name),
-    React.createElement("h2", {}, animal),
-    React.createElement("h2", {}, breed),
-  ]);
-};
+import Pet from "./Pet";
 
 const App = () => {
   return React.createElement("div", {}, [
