@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { ANIMALS } from "@frontendmasters/pet";
-// import useDropdown from "./useDropdown";
+import useDropdown from "./useDropdown";
 
 const SeachParams = () => {
   const [location, setLocation] = useState("Seattle, WA");
-  const [animal, setAnimal] = useState("dog");
+  //   const [animal, setAnimal] = useState("dog");
   //   const [breed, setBreed] = useState("");
-  //   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
-  //   const [breed, BreeedDropdown] = useDropdown("Breed", "", breeds);
-
-  //   const [breeds, setBreeds] = useState([]);
+  const [breeds, setBreeds] = useState([]);
+  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
+  const [breed, BreeedDropdown] = useDropdown("Breed", "", breeds);
 
   return (
     <div className="search-params">
@@ -24,40 +23,14 @@ const SeachParams = () => {
             onChange={(e) => setLocation(e.target.value)}
           />
         </label>
-        <label htmlFor="animal">
-          Animal
-          <select
-            id="animal"
-            value={animal}
-            onChange={(e) => setAnimal(e.target.value)}
-            onBlur={(e) => setAnimal(e.target.value)}
-          >
-            <option value="">All</option>
-            {ANIMALS.map((animal) => (
-              <option key={animal} value={animal}>
-                {animal}
-              </option>
-            ))}
-          </select>
-        </label>
 
-        {/* <label htmlFor="breed">
-          Breed
-          <select
-            id="breed"
-            value={breed}
-            onChange={(e) => setBreed(e.target.value)}
-            onBlur={(e) => setBreed(e.target.value)}
-            disabled={breeds.length === 0}
-          >
-            <option value="">All</option>
-            {breeds.map((breedString) => (
-              <option key={breedString} value={breedString}>
-                {breedString}
-              </option>
-            ))}
-          </select>
-        </label> */}
+        <h1>
+          Animal: {animal}, Breed:{breed}
+        </h1>
+
+        <AnimalDropdown />
+        <BreeedDropdown />
+
         <button>Submit</button>
       </form>
     </div>
