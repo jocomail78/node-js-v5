@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
+import Results from "./Results";
 
 const SeachParams = () => {
   const [location, setLocation] = useState("Seattle, WA");
@@ -9,6 +10,20 @@ const SeachParams = () => {
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreeedDropdown, setBreed] = useDropdown("Breed", "", breeds);
+  const [pets, setPets] = useState([]);
+
+  async function requestPets() {
+    const { animals } = await pet.animals({
+      //wait for this to finish and get me back the "animals"
+      location,
+      breed,
+      type: animal,
+    });
+    //it will arrive here only after finishing the request and getting back the animals
+
+    setPets(animals || []); //set pets with either what's comming from animals or set it to an empty array
+    console.log(animals);
+  }
 
   //adding an effect, which will be scheduled to run after rendering the DOM content
   useEffect(() => {
@@ -29,7 +44,12 @@ const SeachParams = () => {
 
   return (
     <div className="search-params">
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestPets();
+        }}
+      >
         <label htmlFor="location">
           Location
           <input
@@ -40,16 +60,12 @@ const SeachParams = () => {
             onChange={(e) => setLocation(e.target.value)}
           />
         </label>
-
-        <h1>
-          Animal: {animal}, Breed:{breed}
-        </h1>
-
         <AnimalDropdown />
         <BreeedDropdown />
 
         <button>Submit</button>
       </form>
+      <Results pets={pets} />;
     </div>
   );
 };
