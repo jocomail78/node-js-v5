@@ -8,9 +8,9 @@ import Details from "./Details";
 const App = () => {
   return (
     <div>
-      <h1 id="something-important">
+      <header>
         <Link to="/">Adopt me!</Link>
-      </h1>
+      </header>
       <Router>
         <SearchParams path="/" />
         <Details path="/details/:id" />
