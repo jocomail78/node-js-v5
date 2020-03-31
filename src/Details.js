@@ -1,10 +1,11 @@
 import React from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary";
 
 class Details extends React.Component {
   //experimental version:
-  state = { loading: true };
+  state = { loading: true, error: false };
 
   //old version
   // constructor(props) {
@@ -14,19 +15,28 @@ class Details extends React.Component {
   //   };
   // }
   componentDidMount() {
+    //Throwing an error from here would trigger the ErrorBoundary.
+    //throw new Error("Testing Error boundaries");
     //runs at first startup, and won't run again
     //good for loading ajax
-    pet.animal(this.props.id).then(({ animal }) => {
-      this.setState({
-        name: animal.name,
-        animal: animal.type,
-        location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
-        description: animal.description,
-        media: animal.photos,
-        breed: animal.breeds.primary,
-        loading: false,
+    pet
+      .animal(this.props.id)
+      .then(({ animal }) => {
+        this.setState({
+          name: animal.name,
+          animal: animal.type,
+          location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
+          description: animal.description,
+          media: animal.photos,
+          breed: animal.breeds.primary,
+          loading: false,
+        });
+      }, console.error)
+      .catch((err) => {
+        console.log(
+          "There was an error, perhasp due to the missing animal: " + err
+        );
       });
-    }, console.error);
   }
   render() {
     if (this.state.loading) {
@@ -47,4 +57,13 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+// export default Details;
+
+export default function DetailsWithErrorBoundary(props) {
+  // Passing through the props comming from parent to the Details, with this {...props}
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
