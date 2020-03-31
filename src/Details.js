@@ -17,6 +17,7 @@ class Details extends React.Component {
   componentDidMount() {
     //Throwing an error from here would trigger the ErrorBoundary.
     //throw new Error("Testing Error boundaries");
+
     //runs at first startup, and won't run again
     //good for loading ajax
     pet
