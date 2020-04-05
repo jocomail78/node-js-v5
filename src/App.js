@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
-import Pet from "./Pet";
 import SearchParams from "./SearchParams";
-import { Router, Link } from "@reach/router";
+import { Router } from "@reach/router";
 import Details from "./Details";
 import ThemeContext from "./ThemeContext";
+import NavBar from "./NavBar";
 
 const App = () => {
   const themeHook = useState("darkblue");
@@ -13,9 +13,7 @@ const App = () => {
       <ThemeContext.Provider value={themeHook}>
         {/* This is like a global variable available everywhere in the project*/}
         <div>
-          <header>
-            <Link to="/">Adopt me!</Link>
-          </header>
+          <NavBar />
           <Router>
             <SearchParams path="/" />
             <Details path="/details/:id" />
