@@ -1,10 +1,28 @@
-import React from "react";
+import React, { lazy } from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 import { navigate } from "@reach/router";
-import Modal from "./Modal";
+
+/*
+//Includig two really big JS library, to slow down the loading of the page
+import _ from "lodash";
+import moment from "moment";
+
+console.log(_, moment);
+*/
+
+// We can do code split on JS libraries as well, by replacing
+// import Modal from "./Modal";
+// with
+const Modal = lazy(() => import("./Modal"));
+// Which will load modal only if it's strictly needed. Modal will be shown only if the user clicks the Adopt me
+// button. Until then Modal won't be loaded and isn't available.
+
+// Suspens component is not necessary here, if it was added on the top level.
+// Otherwise it has to be added on this page as well, to point out which part has its own
+// way of loading things.
 
 class Details extends React.Component {
   //experimental version:
